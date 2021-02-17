@@ -4,6 +4,7 @@ about: Create a report to help us improve
 title: ''
 labels: bug
 assignees: k42un0k0
+projects: v1.0.0
 
 ---
 
