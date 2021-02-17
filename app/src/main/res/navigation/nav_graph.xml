@@ -3,34 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.k42un0k0smoke.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first" >
-
+        android:id="@+id/itemFragment"
+        android:name="com.example.k42un0k0smoke.modules.results.ItemFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.k42un0k0smoke.modules.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.k42un0k0smoke.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second" >
-
+        android:id="@+id/settingsFragment"
+        android:name="com.example.k42un0k0smoke.modules.settings.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings">
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-        <action
-            android:id="@+id/action_SecondFragment_to_blankFragment"
-            app:destination="@id/blankFragment" />
+            android:id="@+id/action_settingsFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/blankFragment"
-        android:name="com.example.k42un0k0smoke.BlankFragment"
-        android:label="BlankFragment"
-        tools:layout="@layout/blank_fragment"/>
 </navigation>
