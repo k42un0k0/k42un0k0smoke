@@ -11,4 +11,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="go_blank">Go Blank</string>
     <string name="action_results">Results</string>
+    <string name="save">保存</string>
 </resources>

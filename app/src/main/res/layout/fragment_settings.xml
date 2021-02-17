@@ -16,10 +16,18 @@
         android:gravity="center"
         tools:context=".modules.settings.SettingsFragment">
 
-        <TextView
+        <EditText
+            android:id="@+id/cost_per_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.firstName, default=@string/next}" />
+            android:text="@{viewModel.costPerDay.toString()}"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"/>
 
     </LinearLayout>
 </layout>
