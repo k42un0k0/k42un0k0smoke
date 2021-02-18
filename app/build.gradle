@@ -21,6 +21,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -30,6 +32,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -43,6 +46,10 @@ android {
 }
 
 dependencies {
+
+    // desuger for LocalDateTime and etc...
+    // https://developer.android.com/studio/write/java8-support#library-desugaring
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 
     // di
     implementation "com.google.dagger:hilt-android:2.31-alpha"
@@ -64,6 +71,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.mockk:mockk:1.9.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

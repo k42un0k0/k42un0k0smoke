@@ -7,14 +7,13 @@ import javax.inject.Inject
 
 class SettingRepositoryImpl @Inject constructor(val sharedPreferences: SharedPreferences) :
     SettingRepository {
-    private final val kCostPerDay = "setting/costPerDay";
+    private final val costPerDayKey = "setting/costPerDay";
     override fun save(setting: Setting) {
         val editor = sharedPreferences.edit()
-        editor.putLong(kCostPerDay, setting.costPerDay)
-        editor.apply()
+        editor.putLong(costPerDayKey, setting.costPerDay).apply()
     }
 
     override fun find(): Setting {
-        return Setting(sharedPreferences.getLong(kCostPerDay,0))
+        return Setting(sharedPreferences.getLong(costPerDayKey,0))
     }
 }

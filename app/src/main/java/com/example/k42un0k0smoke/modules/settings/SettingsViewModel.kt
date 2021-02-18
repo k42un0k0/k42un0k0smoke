@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 
 class SettingsViewModel @Inject constructor(private val settingRepository: SettingRepository) : ViewModel() {
-    // TODO: Implement the ViewModel
     val costPerDay: MutableLiveData<Long> = MutableLiveData<Long>()
     private var setting: Setting = settingRepository.find() ?: Setting()
 
