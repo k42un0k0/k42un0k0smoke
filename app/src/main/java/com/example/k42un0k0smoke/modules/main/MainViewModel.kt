@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.k42un0k0smoke.model.State
 import com.example.k42un0k0smoke.repository.StateRepository
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
-import java.util.*
 import javax.inject.Inject
-import kotlin.concurrent.scheduleAtFixedRate
 
 class MainViewModel @Inject constructor(private val stateRepository: StateRepository) :
     ViewModel() {
@@ -23,14 +23,8 @@ class MainViewModel @Inject constructor(private val stateRepository: StateReposi
     val yearValue: MutableLiveData<String> = MutableLiveData<String>()
     val isCounting: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
-    private var timer: Timer? = null
-    private val timerTask: TimerTask.() -> Unit = {
-        viewModelScope.launch {
-            setTimeMembers(state.startAt!!)
-        }
-    }
-
     private var state: State = stateRepository.find()
+    private var job: Job? = null
 
     init {
         resetTimeMembers()
@@ -56,14 +50,18 @@ class MainViewModel @Inject constructor(private val stateRepository: StateReposi
 
     private fun setTimer() {
         isCounting.value = true
-        timer = Timer()
-        timer?.scheduleAtFixedRate(0, 1000, timerTask)
+        job = viewModelScope.launch {
+            while (true) {
+                setTimeMembers(state.startAt!!)
+                delay(1000)
+            }
+        }
     }
 
     private fun resetTimer() {
         isCounting.value = false
-        timer?.cancel()
-        timer = null
+        job?.cancel()
+        job = null
     }
 
     private fun setTimeMembers(startAt: LocalDateTime) {
