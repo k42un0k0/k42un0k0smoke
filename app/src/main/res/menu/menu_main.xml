@@ -4,12 +4,11 @@
     tools:context="com.example.k42un0k0smoke.MainActivity">
     <item
         android:id="@+id/settingsFragment"
-        android:orderInCategory="100"
+        android:menuCategory="secondary"
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
         android:id="@+id/itemFragment"
-        android:menuCategory="secondary"
         android:title="@string/action_results"
         app:showAsAction="never" />
 </menu>
