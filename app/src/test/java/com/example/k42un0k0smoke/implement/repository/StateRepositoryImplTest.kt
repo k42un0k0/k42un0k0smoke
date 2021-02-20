@@ -1,6 +1,5 @@
 package com.example.k42un0k0smoke.implement.repository
 
-import android.content.SharedPreferences
 import com.example.k42un0k0smoke.lib.SharedPreferencesWrapper
 import com.example.k42un0k0smoke.model.State
 import io.mockk.every
@@ -9,7 +8,6 @@ import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
-import org.junit.Ignore
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 

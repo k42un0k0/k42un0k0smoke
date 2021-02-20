@@ -1,9 +1,5 @@
 package com.example.k42un0k0smoke.implement.repository
 
-import android.content.SharedPreferences
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.example.k42un0k0smoke.BuildConfig
 import com.example.k42un0k0smoke.lib.SharedPreferencesWrapper
 import com.example.k42un0k0smoke.model.State
 import com.example.k42un0k0smoke.repository.StateRepository

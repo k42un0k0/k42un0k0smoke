@@ -1,7 +1,6 @@
 package com.example.k42un0k0smoke.lib
 
 import android.content.SharedPreferences
-import com.example.k42un0k0smoke.implement.repository.StateRepositoryImpl
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
