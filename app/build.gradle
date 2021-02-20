@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     // binding
     id "androidx.navigation.safeargs.kotlin"
     // di
@@ -23,6 +22,13 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation":
+                                      "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     buildTypes {
@@ -41,13 +47,18 @@ android {
     }
     buildFeatures {
         dataBinding = true
-        viewBinding = true
     }
 }
 
 dependencies {
 
-    // desuger for LocalDateTime and etc...
+    // room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    // desuger for ZoneOffset.UTC and etc...
     // https://developer.android.com/studio/write/java8-support#library-desugaring
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 
@@ -67,11 +78,14 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    // test
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.9.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
 }
