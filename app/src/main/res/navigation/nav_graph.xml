@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.k42un0k0smoke.modules.results.ItemFragment"
+        android:name="com.example.k42un0k0smoke.modules.quit_results.QuitResultsFragment"
         android:label="fragment_item_list"
         tools:layout="@layout/fragment_item_list" />
     <fragment
