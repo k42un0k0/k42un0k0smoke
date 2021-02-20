@@ -42,8 +42,8 @@ class MainFragment : Fragment() {
             setTitle("禁煙を終わりますか")
             setPositiveButton(
                 R.string.ok
-            ) { d: DialogInterface, i: Int -> viewModel.stopTimer() }
-            setNegativeButton(R.string.cancel) { d: DialogInterface, i: Int -> }
+            ) { _: DialogInterface, _: Int -> viewModel.stopTimer() }
+            setNegativeButton(R.string.cancel) { _: DialogInterface, _: Int -> }
         }
         builder.create()
         builder.show()

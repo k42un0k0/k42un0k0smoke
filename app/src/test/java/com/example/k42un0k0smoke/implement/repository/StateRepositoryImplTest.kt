@@ -23,6 +23,7 @@ class StateRepositoryImplTest {
     @Before
     fun setUp() {
         prefsWrapper = mockk(relaxed = true)
+        every { prefsWrapper.putNullableLong(any(), any()) } returns prefsWrapper
         stateRepositoryImpl = StateRepositoryImpl(prefsWrapper)
     }
 
@@ -30,10 +31,10 @@ class StateRepositoryImplTest {
     fun save() {
         val state = State(mockLocalDateTime)
         stateRepositoryImpl.save(state)
-        verify(exactly = 1){
+        verify(exactly = 1) {
             prefsWrapper.putNullableLong(any(), mockEpockSeconds)
         }
-        verify(exactly = 1){
+        verify(exactly = 1) {
             prefsWrapper.applyEditor()
         }
     }
@@ -42,7 +43,7 @@ class StateRepositoryImplTest {
     fun saveWhenStartAtIsNull() {
         val state = State(null)
         stateRepositoryImpl.save(state)
-        verify(exactly = 1){
+        verify(exactly = 1) {
             prefsWrapper.putNullableLong(any(), null)
         }
     }
