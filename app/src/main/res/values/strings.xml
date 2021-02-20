@@ -12,4 +12,8 @@
     <string name="go_blank">Go Blank</string>
     <string name="action_results">Results</string>
     <string name="save">保存</string>
+    <string name="start">開始</string>
+    <string name="stop">終了</string>
+    <string name="ok">はい</string>
+    <string name="cancel">いいえ</string>
 </resources>

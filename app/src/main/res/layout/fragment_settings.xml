@@ -20,7 +20,7 @@
             android:id="@+id/cost_per_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.costPerDay.toString()}"
+            android:text="@={viewModel.costPerDay}"
             android:inputType="numberDecimal" />
 
         <Button
