@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.k42un0k0smoke.R
 import com.example.k42un0k0smoke.model.QuitResult
 
-class MyItemRecyclerViewAdapter : ListAdapter<QuitResult, MyItemRecyclerViewAdapter.ViewHolder>(QuitResultDiffCallback) {
+class MyItemRecyclerViewAdapter :
+    ListAdapter<QuitResult, MyItemRecyclerViewAdapter.ViewHolder>(QuitResultDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fragment_item, parent, false)
@@ -32,7 +33,7 @@ class MyItemRecyclerViewAdapter : ListAdapter<QuitResult, MyItemRecyclerViewAdap
 
         fun bind(quitResult: QuitResult) {
             idView.text = quitResult.uid.toString()
-            contentView.text = quitResult.startAt
+            contentView.text = quitResult.startAt.toString()
         }
     }
 }

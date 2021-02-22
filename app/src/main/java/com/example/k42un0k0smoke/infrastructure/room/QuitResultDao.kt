@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QuitResultDao {
-    @Query("select * from result_dto")
+    @Query("select * from result")
     fun getAll(): Flow<List<QuitResultDto>>
 
     @Insert
-    fun insert(quitResultDto: QuitResultDto)
+    suspend fun insert(quitResultDto: QuitResultDto)
 
     @Delete
     fun delete(quitResultDto: QuitResultDto)

@@ -1,9 +1,9 @@
 package com.example.k42un0k0smoke.modules.main
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.k42un0k0smoke.model.QuitResult
 import com.example.k42un0k0smoke.model.State
+import com.example.k42un0k0smoke.repository.QuitResultRepository
 import com.example.k42un0k0smoke.repository.StateRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -13,74 +13,82 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val stateRepository: StateRepository) :
+class MainViewModel @Inject constructor(
+    private val stateRepository: StateRepository,
+    private val quitResultRepository: QuitResultRepository
+) :
     ViewModel() {
 
-    val secondValue: MutableLiveData<String> = MutableLiveData<String>()
-    val minuteValue: MutableLiveData<String> = MutableLiveData<String>()
-    val hourValue: MutableLiveData<String> = MutableLiveData<String>()
-    val dayValue: MutableLiveData<String> = MutableLiveData<String>()
-    val yearValue: MutableLiveData<String> = MutableLiveData<String>()
-    val isCounting: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val now: MutableLiveData<LocalDateTime> = MutableLiveData(LocalDateTime.now())
+    val secondValue: LiveData<String> = now.map { MainViewModelUtil.secondsToString(duration(it)) }
+    val minuteValue: LiveData<String> = now.map { MainViewModelUtil.minutesToString(duration(it)) }
+    val hourValue: LiveData<String> = now.map { MainViewModelUtil.hoursToString(duration(it)) }
+    val dayValue: LiveData<String> = now.map { MainViewModelUtil.daysToString(duration(it)) }
+    val yearValue: LiveData<String> = now.map { MainViewModelUtil.yearsToString(duration(it)) }
+    val isCounting: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private fun duration(now: LocalDateTime): Duration {
+        val diff = ChronoUnit.SECONDS.between(state.startAt ?: now, now)
+        return Duration.ofSeconds(diff)
+    }
 
     private var state: State = stateRepository.find()
     private var job: Job? = null
 
     init {
-        resetTimeMembers()
         if (state.startAt != null) {
-            setTimer()
+            activateTimer()
         }
     }
 
     fun startTimer() {
-        setNowToState()
-        setTimer()
+        setNewState()
+        activateTimer()
     }
 
     fun stopTimer() {
-        resetTimeMembers()
-        resetTimer()
+        insertResult()
+        initializeValues()
+        resetState()
+        disposeTimer()
     }
 
-    private fun setNowToState() {
-        state.startAt = LocalDateTime.now()
+    private fun setNewState() {
+        state = State(LocalDateTime.now())
         stateRepository.save(state)
     }
 
-    private fun setTimer() {
+    private fun resetState() {
+        state = State(null)
+        stateRepository.save(state)
+    }
+
+    private fun insertResult() {
+        // TODO: totalSavingsをしっかり計算して吐き出す
+        val quitResult = QuitResult(null, state.startAt!!, now.value!!, 1000)
+        viewModelScope.launch {
+            quitResultRepository.insert(quitResult)
+        }
+    }
+
+    private fun initializeValues() {
+        now.value = state.startAt
+    }
+
+    private fun activateTimer() {
         isCounting.value = true
         job = viewModelScope.launch {
             while (true) {
-                setTimeMembers(state.startAt!!)
+                now.value = LocalDateTime.now()
                 delay(1000)
             }
         }
     }
 
-    private fun resetTimer() {
+    private fun disposeTimer() {
         isCounting.value = false
         job?.cancel()
         job = null
-    }
-
-    private fun setTimeMembers(startAt: LocalDateTime) {
-        val now = LocalDateTime.now()
-        val diff = ChronoUnit.SECONDS.between(startAt, now)
-        val duration = Duration.ofSeconds(diff)
-        secondValue.value = MainViewModelUtil.secondsToString(duration)
-        minuteValue.value = MainViewModelUtil.minutesToString(duration)
-        hourValue.value = MainViewModelUtil.hoursToString(duration)
-        dayValue.value = MainViewModelUtil.daysToString(duration)
-        yearValue.value = MainViewModelUtil.yearsToString(duration)
-    }
-
-    private fun resetTimeMembers() {
-        secondValue.value = "0 秒"
-        minuteValue.value = ""
-        hourValue.value = ""
-        dayValue.value = ""
-        yearValue.value = ""
     }
 }
 

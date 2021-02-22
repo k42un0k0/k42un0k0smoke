@@ -15,7 +15,7 @@ class QuitResultRepositoryImpl @Inject constructor(private val quitResultDao: Qu
         quitResultDao.getAll().map { list -> list.map { it.toModel() } }
 
     @WorkerThread
-    override fun insert(quitResult: QuitResult) {
+    override suspend fun insert(quitResult: QuitResult) {
         quitResultDao.insert(QuitResultDto.fromModel(quitResult))
     }
 }

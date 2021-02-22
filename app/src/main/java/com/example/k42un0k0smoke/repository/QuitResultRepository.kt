@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuitResultRepository {
     val allQuitResults: Flow<List<QuitResult>>
-    fun insert(quitResult: QuitResult)
+    suspend fun insert(quitResult: QuitResult)
 }
