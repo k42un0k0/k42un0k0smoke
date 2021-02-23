@@ -19,34 +19,43 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var viewModel: MainViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentMainBinding.inflate(layoutInflater, container, false)
-        binding.buttonStart.setOnClickListener {
-            if (viewModel.isCounting.value == true) {
-                showAlert()
-            } else {
-                viewModel.startTimer()
-            }
+    private val startAlertBuilder by lazy {
+        AlertDialog.Builder(activity).apply {
+            setTitle("もう煙草を吸えません、本当によろしいですか？")
+            setPositiveButton(
+                R.string.ok
+            ) { _: DialogInterface, _: Int -> viewModel.startTimer() }
+            setNegativeButton(R.string.cancel) { _: DialogInterface, _: Int -> }
+            create()
         }
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        return binding.root
     }
 
-    private fun showAlert() {
-        val builder = AlertDialog.Builder(activity)
-        builder.apply {
+    private val stopAlertBuilder by lazy {
+        AlertDialog.Builder(activity).apply {
             setTitle("禁煙を終わりますか")
             setPositiveButton(
                 R.string.ok
             ) { _: DialogInterface, _: Int -> viewModel.stopTimer() }
             setNegativeButton(R.string.cancel) { _: DialogInterface, _: Int -> }
+            create()
         }
-        builder.create()
-        builder.show()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        binding.buttonStart.setOnClickListener {
+            if (viewModel.isCounting.value == true) {
+                stopAlertBuilder.show()
+            } else {
+                startAlertBuilder.show()
+            }
+        }
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        return binding.root
     }
 
 }

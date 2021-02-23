@@ -2,6 +2,9 @@
 buildscript {
     ext.kotlin_version = "1.4.30"
     ext.nav_version = "2.3.3"
+    // MEMO: エラーが起きたのでバージョンをあげた https://stackoverflow.com/questions/60864940/antlr-tool-version-4-5-3-used-for-code-generation-does-not-match-the-current-run
+    ext.room_version = "2.3.0-beta01"
+    ext.lifecycle_version = "2.3.0"
     repositories {
         google()
         jcenter()
@@ -26,3 +29,4 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
