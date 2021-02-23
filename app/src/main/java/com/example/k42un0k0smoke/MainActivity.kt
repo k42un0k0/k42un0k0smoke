@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             navController.graph
         )
-        DebugDB.getAddressLog()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

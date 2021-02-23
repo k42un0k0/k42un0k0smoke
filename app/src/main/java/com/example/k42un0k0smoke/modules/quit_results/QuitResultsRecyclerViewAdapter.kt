@@ -14,7 +14,7 @@ class MyItemRecyclerViewAdapter :
     ListAdapter<QuitResult, MyItemRecyclerViewAdapter.ViewHolder>(QuitResultDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_item, parent, false)
+            .inflate(R.layout.view_quit_result_item, parent, false)
         return ViewHolder(view)
     }
 
