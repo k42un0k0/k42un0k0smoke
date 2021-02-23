@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.amitshekhar.DebugDB
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
