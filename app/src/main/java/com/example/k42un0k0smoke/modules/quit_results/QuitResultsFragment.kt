@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.k42un0k0smoke.databinding.FragmentQuitResultBinding
-import com.example.k42un0k0smoke.model.QuitResult
+import com.example.k42un0k0smoke.model.quit_result.QuitResult
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

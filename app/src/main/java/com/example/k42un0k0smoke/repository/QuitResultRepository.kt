@@ -1,6 +1,6 @@
 package com.example.k42un0k0smoke.repository
 
-import com.example.k42un0k0smoke.model.QuitResult
+import com.example.k42un0k0smoke.model.quit_result.QuitResult
 import kotlinx.coroutines.flow.Flow
 
 interface QuitResultRepository {

@@ -2,8 +2,8 @@ package com.example.k42un0k0smoke.modules.main
 
 import androidx.lifecycle.*
 import com.example.k42un0k0smoke.lib.DurationUtil
-import com.example.k42un0k0smoke.model.QuitResult
-import com.example.k42un0k0smoke.model.QuitResultTotalSavings
+import com.example.k42un0k0smoke.model.quit_result.QuitResult
+import com.example.k42un0k0smoke.model.quit_result.QuitResultTotalSavings
 import com.example.k42un0k0smoke.model.State
 import com.example.k42un0k0smoke.repository.QuitResultRepository
 import com.example.k42un0k0smoke.repository.SettingRepository

@@ -3,8 +3,8 @@ package com.example.k42un0k0smoke.infrastructure.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.k42un0k0smoke.model.QuitResult
-import com.example.k42un0k0smoke.model.QuitResultTotalSavings
+import com.example.k42un0k0smoke.model.quit_result.QuitResult
+import com.example.k42un0k0smoke.model.quit_result.QuitResultTotalSavings
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 

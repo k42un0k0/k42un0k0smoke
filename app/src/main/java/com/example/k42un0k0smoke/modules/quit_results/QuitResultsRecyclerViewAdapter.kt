@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.k42un0k0smoke.R
-import com.example.k42un0k0smoke.model.QuitResult
+import com.example.k42un0k0smoke.model.quit_result.QuitResult
 
 class MyItemRecyclerViewAdapter :
     ListAdapter<QuitResult, MyItemRecyclerViewAdapter.ViewHolder>(QuitResultDiffCallback) {
