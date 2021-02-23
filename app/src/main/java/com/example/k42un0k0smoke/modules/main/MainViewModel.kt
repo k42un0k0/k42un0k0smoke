@@ -1,36 +1,40 @@
 package com.example.k42un0k0smoke.modules.main
 
 import androidx.lifecycle.*
+import com.example.k42un0k0smoke.lib.DurationUtil
 import com.example.k42un0k0smoke.model.QuitResult
+import com.example.k42un0k0smoke.model.QuitResultTotalSavings
 import com.example.k42un0k0smoke.model.State
 import com.example.k42un0k0smoke.repository.QuitResultRepository
+import com.example.k42un0k0smoke.repository.SettingRepository
 import com.example.k42un0k0smoke.repository.StateRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
+    private val settingRepository: SettingRepository,
     private val stateRepository: StateRepository,
     private val quitResultRepository: QuitResultRepository
-) :
-    ViewModel() {
+) : ViewModel() {
 
+    private val setting = settingRepository.find()
     private val now: MutableLiveData<LocalDateTime> = MutableLiveData(LocalDateTime.now())
-    val secondValue: LiveData<String> = now.map { MainViewModelUtil.secondsToString(duration(it)) }
-    val minuteValue: LiveData<String> = now.map { MainViewModelUtil.minutesToString(duration(it)) }
-    val hourValue: LiveData<String> = now.map { MainViewModelUtil.hoursToString(duration(it)) }
-    val dayValue: LiveData<String> = now.map { MainViewModelUtil.daysToString(duration(it)) }
-    val yearValue: LiveData<String> = now.map { MainViewModelUtil.yearsToString(duration(it)) }
-    val isCounting: MutableLiveData<Boolean> = MutableLiveData(false)
-
-    private fun duration(now: LocalDateTime): Duration {
-        val diff = ChronoUnit.SECONDS.between(state.startAt ?: now, now)
-        return Duration.ofSeconds(diff)
+    val totalSavingValue: LiveData<String> = now.map {
+        QuitResultTotalSavings.compute(state.startAt ?: it, it, setting.savingsPerDay).toString()
     }
+
+    private val duration: LiveData<Duration> =
+        now.map { DurationUtil.fromLocalDateTime(state.startAt ?: it, it) }
+    val secondValue: LiveData<String> = duration.map { MainViewModelUtil.secondsToString(it) }
+    val minuteValue: LiveData<String> = duration.map { MainViewModelUtil.minutesToString(it) }
+    val hourValue: LiveData<String> = duration.map { MainViewModelUtil.hoursToString(it) }
+    val dayValue: LiveData<String> = duration.map { MainViewModelUtil.daysToString(it) }
+    val yearValue: LiveData<String> = duration.map { MainViewModelUtil.yearsToString(it) }
+    val isCounting: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private var state: State = stateRepository.find()
     private var job: Job? = null
@@ -64,8 +68,15 @@ class MainViewModel @Inject constructor(
     }
 
     private fun insertResult() {
-        // TODO: totalSavingsをしっかり計算して吐き出す
-        val quitResult = QuitResult(null, state.startAt!!, now.value!!, 1000)
+        val startAt = state.startAt!!
+        val endAt = now.value!!
+        val totalSavings = QuitResultTotalSavings.compute(startAt, endAt, setting.savingsPerDay)
+        val quitResult = QuitResult(
+            null,
+            startAt,
+            endAt,
+            totalSavings
+        )
         viewModelScope.launch {
             quitResultRepository.insert(quitResult)
         }

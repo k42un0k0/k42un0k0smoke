@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.k42un0k0smoke.model.QuitResult
+import com.example.k42un0k0smoke.model.QuitResultTotalSavings
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -19,7 +20,7 @@ data class QuitResultDto(
             this.uid,
             LocalDateTime.ofEpochSecond(this.startAt, 0, ZoneOffset.UTC),
             LocalDateTime.ofEpochSecond(this.endAT, 0, ZoneOffset.UTC),
-            this.totalSavings
+            QuitResultTotalSavings(this.totalSavings)
         )
     }
 
@@ -29,7 +30,7 @@ data class QuitResultDto(
                 quitResult.uid ?: DtoConstants.NOT_GENERATED_PRIMARY_KEY_INT,
                 quitResult.startAt.toEpochSecond(ZoneOffset.UTC),
                 quitResult.endAt.toEpochSecond(ZoneOffset.UTC),
-                quitResult.totalSavings
+                quitResult.totalSavings.value
             )
         }
     }

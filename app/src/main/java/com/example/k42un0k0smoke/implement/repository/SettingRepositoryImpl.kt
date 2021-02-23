@@ -5,15 +5,15 @@ import com.example.k42un0k0smoke.model.Setting
 import com.example.k42un0k0smoke.repository.SettingRepository
 import javax.inject.Inject
 
-class SettingRepositoryImpl @Inject constructor(val sharedPreferences: SharedPreferences) :
+class SettingRepositoryImpl @Inject constructor(val prefs: SharedPreferences) :
     SettingRepository {
-    private final val costPerDayKey = "setting/costPerDay";
+    private val savingsPerDayKey = "setting/savingsPerDay";
     override fun save(setting: Setting) {
-        val editor = sharedPreferences.edit()
-        editor.putLong(costPerDayKey, setting.costPerDay).apply()
+        val editor = prefs.edit()
+        editor.putLong(savingsPerDayKey, setting.savingsPerDay).apply()
     }
 
     override fun find(): Setting {
-        return Setting(sharedPreferences.getLong(costPerDayKey,0))
+        return Setting(prefs.getLong(savingsPerDayKey,0))
     }
 }

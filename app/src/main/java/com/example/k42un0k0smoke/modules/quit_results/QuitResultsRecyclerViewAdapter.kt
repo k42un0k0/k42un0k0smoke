@@ -26,6 +26,7 @@ class MyItemRecyclerViewAdapter :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val idView: TextView = view.findViewById(R.id.item_number)
         private val contentView: TextView = view.findViewById(R.id.content)
+        private val totalSavings: TextView = view.findViewById(R.id.quit_result_total_savings)
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
@@ -34,6 +35,7 @@ class MyItemRecyclerViewAdapter :
         fun bind(quitResult: QuitResult) {
             idView.text = quitResult.uid.toString()
             contentView.text = quitResult.startAt.toString()
+            totalSavings.text = quitResult.totalSavings.toString()
         }
     }
 }
